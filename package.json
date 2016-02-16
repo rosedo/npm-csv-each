@@ -1,0 +1,24 @@
+{
+  "name": "csv-ew",
+  "main": "csv.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ezeeworld/npm-csv-ew.git"
+  },
+  "version": "1.2.0",
+  "description": "CSV reading library",
+  "scripts": {
+    "test": "if test -f node_modules/.bin/mocha; then node_modules/.bin/mocha test; else mocha test; fi"
+  },
+  "author": "Dominic Rose",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": ""
+  },
+  "devDependencies": {
+    "mocha": ""
+  },
+  "engines": {
+    "node" : ">=0.12"
+  }
+}

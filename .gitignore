@@ -1,0 +1,12 @@
+# built content
+/release/
+
+# npm
+/node_modules/
+/npm-debug.log
+
+# Sublime Text
+/*.sublime-workspace
+
+# OS X
+.DS_Store

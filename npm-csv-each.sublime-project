@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "follow_symlinks": false,
+      "path": ".",
+      "folder_exclude_patterns": [
+        "release",
+      ],
+      "file_exclude_patterns": [
+        "npm-debug.log",
+      ],
+    },
+  ],
+  "settings": {
+    "translate_tabs_to_spaces": false,
+  },
+}
