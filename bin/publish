@@ -1,13 +1,13 @@
-#!/bin/sh
+#!/bin/bash
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
 
-(cd $DIR && eslint .) || exit 1
-(cd $DIR && npm test) || exit 1
-test -f $DIR/release && (rm -r $DIR/release || exit 1)
-mkdir -p $DIR/release || exit 1
-cp -r $DIR/test $DIR/release || exit 1
-cp $DIR/csv.js $DIR/release || exit 1
-cp $DIR/package.json $DIR/release || exit 1
-cp $DIR/README.md $DIR/release || exit 1
-npm publish $DIR/release || exit 1
+(cd "$DIR" && eslint .) || exit 1
+(cd "$DIR" && npm test) || exit 1
+rm -r "$DIR/release" || exit 1
+mkdir "$DIR/release" || exit 1
+cp -r "$DIR/test" "$DIR/release" || exit 1
+cp "$DIR/csv.js" "$DIR/release" || exit 1
+cp "$DIR/package.json" "$DIR/release" || exit 1
+cp "$DIR/README.md" "$DIR/release" || exit 1
+npm publish "$DIR/release" || exit 1
