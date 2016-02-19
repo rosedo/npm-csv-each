@@ -1,6 +1,8 @@
 // does not work in strict mode
 
 var readline = require('readline');
+var iconv = require('iconv-lite');
+var charsetDetector = require('node-icu-charset-detector');
 var fs = require('fs');
 var _ = require('lodash');
 
@@ -69,7 +71,23 @@ function new_(mainOptions) {
         };
         var rlStack = [];
         var isWorking = false;
+        var charset = 0;
         rl.on('line', function onLine(line) {
+          var lineBuffer = new Buffer(line);
+          if (charset === 0) {
+            while(_.includes([0xEF, 0xBF, 0xBB, 0xBD], lineBuffer[0])) {
+              [].shift.apply(lineBuffer);
+            }
+            line = '' + lineBuffer;
+            lineBuffer = new Buffer(line);
+            line = iconv.decode(new Buffer(line), charsetDetector.detectCharset(lineBuffer).toString(), { stripBOM: true });
+            charset++;
+          } else if (charset === 1) {
+            charset = charsetDetector.detectCharset(lineBuffer).toString();
+            line = iconv.decode(new Buffer(line), charset);
+          } else {
+            line = iconv.decode(new Buffer(line), charset);
+          }
           rl.pause();
           if (!isWorking) {
             isWorking = true;
@@ -88,13 +106,6 @@ function new_(mainOptions) {
           rl.resume();
         }
         function onLineSafe(line) {
-          if (lineNumber === 0) {
-            var buffer = new Buffer(line, 'utf8');
-            while(_.includes([0xEF, 0xBF, 0xBB, 0xBD], buffer[0])) {
-              [].shift.apply(buffer);
-            }
-            line = '' + buffer;
-          }
           lineNumber++;
           if (options.trimLine) {
             line = line.trim();
