@@ -88,6 +88,13 @@ function new_(mainOptions) {
           rl.resume();
         }
         function onLineSafe(line) {
+          if (lineNumber === 0) {
+            var buffer = new Buffer(line, 'utf8');
+            while(_.includes([0xEF, 0xBF, 0xBB, 0xBD], buffer[0])) {
+              [].shift.apply(buffer);
+            }
+            line = '' + buffer;
+          }
           lineNumber++;
           if (options.trimLine) {
             line = line.trim();
