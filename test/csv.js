@@ -12,6 +12,7 @@ var csv = csvModule({
   raiseOnEmptyLines: false,
   raiseOnMissingColumns: false,
   raiseOnExtraColumns: false,
+  skipEmptyLines: false,
 });
 
 var testDataExpectedRecordCount = 8;
@@ -349,6 +350,39 @@ describe('module csv', function() {
                 assert.strictEqual(typeof record.Column2, 'undefined');
                 assert.strictEqual(record.myColumn1, 'value1');
                 assert.strictEqual(record.myColumn2, 'value2');
+              }
+              return resolve();
+            });
+          },
+        }).then(done, done);
+      });
+    });
+    describe('option skipEmptyLines', function() {
+      it('if true: should use the record from the next non-empty line if it exists', function(done) {
+        var iteratorTimesCalled = 0;
+        csv.eachEntry({
+          skipEmptyLines: true,
+          iterator: function(record) {
+            return new Promise(function(resolve, reject) {
+              iteratorTimesCalled++;
+              if (iteratorTimesCalled == 5) {
+                assert.strictEqual(record.Column1, 'value8');
+              }
+              return resolve();
+            });
+          },
+        }).then(done, done);
+      });
+      it('if false: should return a record with values corresponding to the options "defaultValueOnEmptyColumn" and "defaultValueOnMissingColumn"', function(done) {
+        var iteratorTimesCalled = 0;
+        csv.eachEntry({
+          skipEmptyLines: false,
+          iterator: function(record) {
+            return new Promise(function(resolve, reject) {
+              iteratorTimesCalled++;
+              if (iteratorTimesCalled == 5) {
+                assert.strictEqual(record.Column1, '');
+                assert.strictEqual(record.Column2, null);
               }
               return resolve();
             });

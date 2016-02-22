@@ -55,6 +55,9 @@ csv.eachEntry({
   raiseOnMissingColumns: true,
   raiseOnExtraColumns: true,
 
+  // if false: the record will have values defined by the options "defaultValueOnEmptyColumn" "defaultValueOnMissingColumn"
+  skipEmptyLines: true,
+
   // if true: use the CSV values (array) instead of turning it into an object
   returnArrays: false,
 

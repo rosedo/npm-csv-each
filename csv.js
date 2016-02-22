@@ -20,6 +20,7 @@ var defaultOptions = {
   defaultValueOnMissingColumn: null,
   columnNames: 'auto',
   skipFirstLine: false,
+  skipEmptyLines: true,
 };
 
 module.exports = new_();
@@ -56,6 +57,7 @@ function new_(mainOptions) {
       'defaultValueOnMissingColumn',
       'columnNames',
       'skipFirstLine',
+      'skipEmptyLines',
     ]).then(function() {
       return new Promise(function(resolve, reject) {
         var rl = readline.createInterface({
@@ -76,7 +78,7 @@ function new_(mainOptions) {
           var lineBuffer = new Buffer(line);
           if (charset === 0) {
             while(_.includes([0xEF, 0xBF, 0xBB, 0xBD], lineBuffer[0])) {
-              [].shift.apply(lineBuffer);
+              lineBuffer = lineBuffer.slice(1);
             }
             line = '' + lineBuffer;
             lineBuffer = new Buffer(line);
@@ -110,8 +112,12 @@ function new_(mainOptions) {
           if (options.trimLine) {
             line = line.trim();
           }
-          if (options.raiseOnEmptyLines && !line.length) {
-            return raiseForCurrentLine('empty line');
+          if (!line.length) {
+            if (options.raiseOnEmptyLines) {
+              return raiseForCurrentLine('empty line');
+            } else if (options.skipEmptyLines) {
+              return process.nextTick(onLineCompleted);
+            }
           }
           if (options.returnLines) {
             return options.iterator(line).then(onLineCompleted, reject);
