@@ -45,6 +45,19 @@ describe('module csv', function() {
         });
       }).then(done, done);
     });
+    it('should also accept a synchronous function as iterator', function(done) {
+      var iteratorTimesCalled = 0;
+      csv.eachEntry({
+        iterator: function(record) {
+          iteratorTimesCalled++;
+        },
+      }).then(function() {
+        return new Promise(function(resolve, reject) {
+          assert.strictEqual(iteratorTimesCalled, testDataExpectedRecordCount);
+          return resolve();
+        });
+      }).then(done, done);
+    });
     describe('option trimLine', function() {
       it('if true: should remove whitespace on left and right side of the lines', function(done) {
         var iteratorTimesCalled = 0;

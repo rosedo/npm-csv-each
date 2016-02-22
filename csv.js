@@ -60,6 +60,7 @@ function new_(mainOptions) {
       'skipEmptyLines',
     ]).then(function() {
       return new Promise(function(resolve, reject) {
+        var _iterator = wrapIterator(options.iterator);
         var rl = readline.createInterface({
           input: fs.createReadStream(options.filename),
         });
@@ -120,7 +121,7 @@ function new_(mainOptions) {
             }
           }
           if (options.returnLines) {
-            return options.iterator(line).then(onLineCompleted, reject);
+            return _iterator(line).then(onLineCompleted, reject);
           }
           var lineSplit = splitLine(line, options.delimiter, options.handleQuotes);
           if (options.trimColumns) {
@@ -158,7 +159,7 @@ function new_(mainOptions) {
             });
           }
           if (options.returnArrays) {
-            return options.iterator(lineSplit).then(onLineCompleted, reject);
+            return _iterator(lineSplit).then(onLineCompleted, reject);
           }
           var record = {};
           var i = -1;
@@ -166,7 +167,7 @@ function new_(mainOptions) {
             i++;
             record[columnNames[i]] = columnValue;
           });
-          return options.iterator(record).then(onLineCompleted, reject);
+          return _iterator(record).then(onLineCompleted, reject);
         }
       });
     });
@@ -225,4 +226,14 @@ function splitLine(line, delimiter, handleQuotes) {
     lineSplit = line.split(delimiter);
   }
   return lineSplit;
+}
+
+function wrapIterator(iterator) {
+  return function(record) {
+    var result = iterator(record);
+    if (result instanceof Promise) {
+      return result;
+    }
+    return Promise.resolve(result);
+  };
 }
