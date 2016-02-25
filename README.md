@@ -5,7 +5,7 @@
 $ npm install --save csv-ew
 ```
 
-## Configuration
+## Usage
 ```js
 const csv = require('csv-ew');
 
@@ -17,12 +17,12 @@ const csv = require('csv-ew');
 csv.myCustomReader = csv({ trimColumns: true });
 // freeing memory: delete csv.myCustomReader
 
-// ES5: injecting Promise dependency
-var Promise = require('my-promise-lib');
-var csv = require('csv-ew')({ Promise: Promise });
+// if Promise isn't defined
+global.Promise = require('promise-module');
+var csv = require('csv-ew');
 ```
 
-## Iterating through records of a CSV file
+### Iterating through records of a CSV file
 ```js
 csv.eachEntry({
 
@@ -78,10 +78,7 @@ csv.eachEntry({
   skipFirstLine: false,
 
 })
-
-// last iteration completed
-.then(() => console.log('Done.'))
-
+.then(() => console.log('last iteration completed.'))
 .catch(console.error);
 ```
 

@@ -1,4 +1,4 @@
-// does not work in strict mode
+'use strict';
 
 var readline = require('readline');
 var iconv = require('iconv-lite');
@@ -27,13 +27,6 @@ module.exports = new_();
 function new_(mainOptions) {
   mainOptions = _.cloneDeep(mainOptions || {});
   _.defaultsDeep(mainOptions, defaultOptions);
-
-  // does not work in strict mode
-  Promise = (typeof Promise === 'undefined') ? mainOptions.Promise : Promise;
-
-  if (Promise === undefined) {
-    throw new Error('missing `Promise` dependency injection or global variable');
-  }
   return _.assign(new_.bind(), {
     eachEntry: eachEntry,
   });

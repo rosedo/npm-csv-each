@@ -4,10 +4,6 @@ var assert = require('assert');
 var _ = require('lodash');
 var csvModule = require('../csv');
 var csv = csvModule({
-
-  // if promise isn't defined globally
-  // Promise: require('bluebird'),
-
   filename: __dirname + '/test-data.csv',
   raiseOnEmptyLines: false,
   raiseOnMissingColumns: false,

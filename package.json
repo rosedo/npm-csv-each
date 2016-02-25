@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/ezeeworld/npm-csv-ew.git"
   },
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "CSV reading library",
   "scripts": {
     "test": "if test -f node_modules/.bin/mocha; then node_modules/.bin/mocha test; else mocha test; fi"
@@ -19,8 +19,5 @@
   },
   "devDependencies": {
     "mocha": ""
-  },
-  "engines": {
-    "node": ">=0.12"
   }
 }
