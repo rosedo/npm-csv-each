@@ -84,6 +84,7 @@ csv.eachEntry({
 
 ## Running tests
 ```sh
-$ npm install
+$ npm install --only=dev
+$ npm install mocha // or npm install -g mocha
 $ npm test
 ```
