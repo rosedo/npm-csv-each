@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
+
+if test -f "$DIR/node_modules/.bin/eslint"; then
+  ESLINT="$DIR/node_modules/.bin/eslint"
+else
+  ESLINT="eslint"
+fi
+(cd "$DIR" && "$ESLINT" .) || exit 1

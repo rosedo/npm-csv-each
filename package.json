@@ -1,23 +1,27 @@
 {
   "name": "csv-ew",
-  "main": "csv.js",
+  "main": "src/built/csv.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/ezeeworld/npm-csv-ew.git"
   },
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "CSV reading library",
   "scripts": {
-    "test": "if test -f node_modules/.bin/mocha; then node_modules/.bin/mocha test; else mocha test; fi"
+    "prepublish": "bin/prepublish",
+    "test": "bin/build && bin/test && bin/lint"
   },
   "author": "Dominic Rose",
   "license": "ISC",
   "dependencies": {
-    "iconv-lite": "",
-    "lodash": "",
-    "node-icu-charset-detector": ""
+    "iconv-lite": ">= 0.4.13",
+    "lodash": ">= 4.5.1",
+    "node-icu-charset-detector": ">= 0.1.4"
   },
   "devDependencies": {
-    "mocha": ""
+    "babel-cli": ">= 6.5.1",
+    "babel-preset-es2015": ">= 6.5.0",
+    "eslint": ">= 2.2.0",
+    "mocha": ">= 2.4.5"
   }
 }

@@ -1,7 +1,16 @@
 {
-  rules: {
-    semi: 2,
-    indent: [2, 2],
-    linebreak-style: 2,
+  "globals": {},
+  "env": {},
+  "rules": {
+    "semi": 2,
+    "indent": [
+      2,
+      4
+    ],
+    "linebreak-style": 2
   },
+  "parserOptions": {
+    "ecmaVersion": 6,
+  },
+  "parser": "espree"
 }

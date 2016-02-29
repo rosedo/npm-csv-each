@@ -1,0 +1,9 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
+
+rm -r "$DIR/release" 2>/dev/null
+mkdir "$DIR/release" || exit 1
+cp -r "$DIR/src" "$DIR/release" || exit 1
+cp "$DIR/package.json" "$DIR/release" || exit 1
+cp "$DIR/README.md" "$DIR/release" || exit 1

@@ -1,5 +1,6 @@
 # built content
 /release/
+/src/built/
 
 # npm
 /node_modules/

@@ -5,6 +5,7 @@
       "path": ".",
       "folder_exclude_patterns": [
         "release",
+        "src/built",
       ],
       "file_exclude_patterns": [
         "npm-debug.log",

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
+
+if test -f "$DIR/node_modules/.bin/babel"; then
+  BABEL="$DIR/node_modules/.bin/babel"
+else
+  BABEL="babel"
+fi
+(cd "$DIR" && "$BABEL" babel-src -d src/built) || exit 1
