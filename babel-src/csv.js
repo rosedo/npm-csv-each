@@ -1,5 +1,5 @@
 'use strict';
-
+require('babel-polyfill');
 const readline = require('readline');
 const iconv = require('iconv-lite');
 const charsetDetector = require('node-icu-charset-detector');
@@ -99,7 +99,7 @@ function new_(mainOptions) {
                 isWorking = false;
                 rl.resume();
             }
-            function onLineSafe(line) {
+            async function onLineSafe(line) {
                 lineNumber++;
                 if (options.trimLine) {
                     line = line.trim();
@@ -158,7 +158,12 @@ function new_(mainOptions) {
                     i++;
                     record[columnNames[i]] = columnValue;
                 });
-                return _iterator(record).then(onLineCompleted, reject);
+                try {
+                    await _iterator(record);
+                } catch(err) {
+                    return reject(err);
+                }
+                onLineCompleted();
             }
         });
     }

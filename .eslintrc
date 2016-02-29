@@ -9,8 +9,5 @@
     ],
     "linebreak-style": 2
   },
-  "parserOptions": {
-    "ecmaVersion": 6,
-  },
-  "parser": "espree"
+  "parser": "babel-eslint",
 }
