@@ -1,0 +1,32 @@
+#!/bin/bash
+
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
+
+echo -n "running npm install --ignore-scripts… "
+(cd "$DIR" && npm install --ignore-scripts) || exit 1
+echo "done"
+
+echo -n "running npm install --only=dev --ignore-scripts… "
+(cd "$DIR" && npm install --only=dev --ignore-scripts) || exit 1
+echo "done"
+
+echo -n "running build script… "
+"$DIR/bin/build" || exit 1
+echo "done"
+
+echo -n "running release script… "
+"$DIR/bin/release" || exit 1
+echo "done"
+
+echo -n "running test script"
+"$DIR/bin/test" || exit 1
+echo "done"
+
+echo -n "running lint script… "
+"$DIR/bin/lint" || exit 1
+echo "done"
+
+echo "--------------------------------------------------------------------------------"
+echo "publishing $DIR/release"
+echo "--------------------------------------------------------------------------------"
+npm publish --ignore-scripts "$DIR/release" || exit 1

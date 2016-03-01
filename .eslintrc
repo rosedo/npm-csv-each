@@ -3,10 +3,7 @@
   "env": {},
   "rules": {
     "semi": 2,
-    "indent": [
-      2,
-      4
-    ],
+    "indent": 2,
     "linebreak-style": 2
   },
   "parserOptions": {

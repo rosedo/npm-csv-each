@@ -2,24 +2,24 @@
 
 ## Installation
 ```sh
-$ npm install --save csv-ew
+$ npm install --save csv-each
 ```
 
 ## Usage
 ```js
-const csv = require('csv-ew');
+const csv = require('csv-each');
 
 // customizing options up-front
-const csv = require('csv-ew')({ trimColumns: true });
+const csv = require('csv-each')({ trimColumns: true });
 
 // making an instance available to other files
-const csv = require('csv-ew');
+const csv = require('csv-each');
 csv.myCustomReader = csv({ trimColumns: true });
 // freeing memory: delete csv.myCustomReader
 
 // if Promise isn't defined
 global.Promise = require('promise-module');
-var csv = require('csv-ew');
+var csv = require('csv-each');
 ```
 
 ### Iterating through records of a CSV file
@@ -40,6 +40,12 @@ csv.eachEntry({
   // OPTIONAL FIELDS and their default values
 
   delimiter: ',',
+
+  // specify input CSV file encoding
+  encoding: 'utf-8',
+
+  // use same encoding, or a specific one for the first line
+  firstLineEncoding: 'auto',
 
   // if true: " line " => "line"
   trimLine: false,
@@ -84,7 +90,6 @@ csv.eachEntry({
 
 ## Running tests
 ```sh
-$ npm install --only=dev
-$ npm install mocha // or npm install -g mocha
+$ npm install
 $ npm test
 ```

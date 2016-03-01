@@ -7,4 +7,4 @@ if test -f "$DIR/node_modules/.bin/babel"; then
 else
   BABEL="babel"
 fi
-(cd "$DIR" && "$BABEL" babel-src -d src/built) || exit 1
+"$BABEL" "$DIR/babel-src" -d "$DIR/src/built" || exit 1

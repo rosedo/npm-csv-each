@@ -1,11 +1,11 @@
 {
-  "name": "csv-ew",
+  "name": "csv-each",
   "main": "src/built/csv.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ezeeworld/npm-csv-ew.git"
+    "url": "https://github.com/rosedo/npm-csv-each.git"
   },
-  "version": "1.3.3",
+  "version": "1.4.0",
   "description": "CSV reading library",
   "scripts": {
     "prepublish": "bin/prepublish",
@@ -15,8 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "iconv-lite": ">= 0.4.13",
-    "lodash": ">= 4.5.1",
-    "node-icu-charset-detector": ">= 0.1.4"
+    "lodash": ">= 4.5.1"
   },
   "devDependencies": {
     "babel-cli": ">= 6.5.1",

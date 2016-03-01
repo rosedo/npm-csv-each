@@ -7,4 +7,4 @@ if test -f "$DIR/node_modules/.bin/eslint"; then
 else
   ESLINT="eslint"
 fi
-(cd "$DIR" && "$ESLINT" .) || exit 1
+"$ESLINT" "$DIR" || exit 1

@@ -3,7 +3,8 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
 
 if test -f "$DIR/node_modules/.bin/mocha"; then
-  "$DIR/node_modules/.bin/mocha" "$DIR/test" || exit 1
+  MOCHA="$DIR/node_modules/.bin/mocha"
 else
-  mocha "$DIR/test" || exit 1
+  MOCHA="mocha"
 fi
+"$MOCHA" --recursive "$DIR/test" || exit 1

@@ -2,26 +2,8 @@
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/..
 
-echo -n "running npm install --ignore-scripts… "
-(cd "$DIR" && npm install --ignore-scripts) || exit 1
-echo "done"
-
-echo -n "running npm install --only=dev --ignore-scripts… "
-(cd "$DIR" && npm install --only=dev --ignore-scripts) || exit 1
-echo "done"
-
-echo -n "running build script… "
-(cd "$DIR" && "$DIR/bin/build") || exit 1
-echo "done"
-
-echo -n "running release script… "
-(cd "$DIR" && "$DIR/bin/release") || exit 1
-echo "done"
-
-echo -n "running test script"
-(cd "$DIR" && "$DIR/bin/test") || exit 1
-echo "done"
-
-echo -n "running lint script… "
-(cd "$DIR" && "$DIR/bin/lint") || exit 1
-echo "done"
+"$DIR/bin/publish" || exit 1
+echo "--------------------------------------------------------------------------------"
+echo "prevent publishing $DIR"
+echo "--------------------------------------------------------------------------------"
+exit 1

@@ -2,7 +2,6 @@
 
 const readline = require('readline');
 const iconv = require('iconv-lite');
-const charsetDetector = require('node-icu-charset-detector');
 const fs = require('fs');
 const _ = require('lodash');
 
@@ -21,6 +20,8 @@ const defaultOptions = {
     columnNames: 'auto',
     skipFirstLine: false,
     skipEmptyLines: true,
+    encoding: 'utf-8',
+    firstLineEncoding: 'auto',
 };
 
 module.exports = new_();
@@ -51,6 +52,8 @@ function new_(mainOptions) {
             'columnNames',
             'skipFirstLine',
             'skipEmptyLines',
+            'encoding',
+            'firstLineEncoding',
         ]);
         return new Promise(function(resolve, reject) {
             var _iterator = wrapIterator(options.iterator);
@@ -76,10 +79,11 @@ function new_(mainOptions) {
                     }
                     line = '' + lineBuffer;
                     lineBuffer = new Buffer(line);
-                    line = iconv.decode(new Buffer(line), charsetDetector.detectCharset(lineBuffer).toString(), { stripBOM: true });
+                    let encoding = options.firstLineEncoding === 'auto' ? options.encoding : options.firstLineEncoding;
+                    line = iconv.decode(new Buffer(line), encoding, { stripBOM: true });
                     charset++;
                 } else if (charset === 1) {
-                    charset = charsetDetector.detectCharset(lineBuffer).toString();
+                    charset = options.encoding;
                     line = iconv.decode(new Buffer(line), charset);
                 } else {
                     line = iconv.decode(new Buffer(line), charset);
@@ -165,13 +169,10 @@ function new_(mainOptions) {
 }
 
 function requireOptions(providedOptions, requiredOptionNames) {
-    return new Promise(function(resolve, reject) {
-        requiredOptionNames.forEach(function(optionName) {
-            if (typeof providedOptions[optionName] === 'undefined') {
-                return reject(new Error('missing option: ' + optionName));
-            }
-        });
-        return resolve();
+    requiredOptionNames.forEach(function(optionName) {
+        if (typeof providedOptions[optionName] === 'undefined') {
+            throw new Error('missing option: ' + optionName);
+        }
     });
 }
 
@@ -219,5 +220,5 @@ function splitLine(line, delimiter, handleQuotes) {
 }
 
 function wrapIterator(iterator) {
-    return record => Promise.resolve(iterator(record));
+    return record => new Promise((resolve, reject) => resolve(iterator(record)));
 }

@@ -397,5 +397,30 @@ describe('module csv', function() {
                 }).then(done, done);
             });
         });
+        describe('encoding options', function() {
+            it('should read specified encoding', function(done) {
+                var iteratorTimesCalled = 0;
+                csv.eachEntry({
+                    filename: __dirname + '/test-encoding.csv',
+                    encoding: 'UTF16-BE',
+                    firstLineEncoding: 'UTF16-LE',
+                    skipEmptyLines: true,
+                    iterator: function(record) {
+                        iteratorTimesCalled++;
+                        if (iteratorTimesCalled === 1) {
+                            assert.strictEqual(record.Date, '2016-01-01');
+                        } else if (iteratorTimesCalled === 2) {
+                            assert.strictEqual(record.Date, '2016-01-31');
+                            assert.strictEqual(record['App Version Code'], '5');
+                        }
+                    },
+                })
+                .then(() => {
+                    assert.strictEqual(iteratorTimesCalled, 2);
+                    done();
+                })
+                .catch(done);
+            });
+        });
     });
 });
